@@ -84,6 +84,7 @@ const showCard = async (data) => {
     clone.querySelector("p.description").innerText = data.productDescription
     clone.querySelector("button").addEventListener('click', () => { addToCart(data) })
  //
+ //
  
         div.appendChild(clone)
     
