@@ -27,14 +27,15 @@ namespace Login.Controllers
 
         private readonly ILogger <UserController> Logger;
         
-        public UserController(IUserService _userService,IMapper mapper,ILogger<UserController>logger)
+        public UserController(IUserService _userService,IMapper mapper, ILogger<UserController> logger)
         {
             userService = _userService;
             Mapper = mapper;
             Logger = logger;
+
         }
-
-
+       
+       
         // GET api/<UsersController>/5
         [HttpGet("{id}")]
         async public Task<ActionResult> Get(int id)
@@ -81,11 +82,11 @@ namespace Login.Controllers
             {
                 User user = Mapper.Map<UserDTO, User>(UserDto);
                 if (user != null)
-                    Logger.LogInformation($"new user {user.UserName}register");
+                   Logger.LogInformation($"new user {user.UserName}register");
                 User sendUser = await userService.addUser(user);
                 UserLoginDTO UserLDTO = Mapper.Map<User, UserLoginDTO>(sendUser);
                 int zero = 0;
-                //int num= 10 / zero;
+                int num= 10 / zero;
                 if(UserLDTO!=null)
               return CreatedAtAction(nameof(Get), new { id = sendUser.UserId }, UserLDTO);
                 return BadRequest();

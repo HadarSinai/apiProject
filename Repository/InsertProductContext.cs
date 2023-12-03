@@ -3,20 +3,22 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Entities;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace Repository;
 
 public partial class InsertProductContext : DbContext
 {
     public IConfiguration _configuration { get; }
-    public InsertProductContext(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
 
-    public InsertProductContext(DbContextOptions<InsertProductContext> options)
+
+
+
+
+    public InsertProductContext(DbContextOptions<InsertProductContext> options,IConfiguration configuration)
         : base(options)
     {
+        _configuration = configuration;
     }
 
     public virtual DbSet<Category> Categories { get; set; }
