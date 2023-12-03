@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Repository;
 using Service;
-
+using Microsoft.Extensions.Configuration;
+using NLog.Web;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,12 +23,13 @@ builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IOrdersRepository, OrdersRepository>();
 builder.Services.AddTransient<IOrdersService, OrdersService>();
 
-builder.Services.AddDbContext<InsertProductContext>(option => option.UseSqlServer("Server=srv2\\pupils;Database=InsertProduct;Trusted_Connection=True;TrustServerCertificate=True"));
+builder.Services.AddDbContext<InsertProductContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("ShoesShoes")));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+builder.Host.UseNLog();
 
 var app = builder.Build();
 

@@ -21,7 +21,7 @@ namespace Service
         {
             return await userRepository.getUserByUserNameAndPassword(userName, password);
         }
-         public User addUser(User user)
+         public Task<User> addUser(User user)
         {
 
             return  userRepository.addUser(user);
@@ -34,7 +34,7 @@ namespace Service
             return answer;
 
         }
-       async  public Task <bool> updateUser(int id, User user)
+       async  public Task <User> updateUser(int id, User user)
         {
             return await userRepository.UpdateUser(id, user);
         }

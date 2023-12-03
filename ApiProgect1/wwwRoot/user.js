@@ -4,9 +4,18 @@
 //למחוק לפי id
 const login = async () => {
     try {
+      
         const userNameLogin = document.getElementById("id").value;
-        const passwordLogin = document.getElementById("pass").value;
-        const res = await fetch(`api/User?&userName=${userNameLogin}&password=${passwordLogin}`)
+            const passwordLogin = document.getElementById("pass").value;
+        const login = { userNameLogin, passwordLogin };
+            const res = await fetch('api/User/postLogin',{ 
+            method: 'POST',
+                headers: {
+                'Content-Type': 'application/json'
+            },
+           
+            body: JSON.stringify(login)
+        });
         
         if (!res.ok) {
             

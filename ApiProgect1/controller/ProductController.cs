@@ -26,7 +26,7 @@ namespace ApiProgect1.controller
         public async Task <ActionResult<List<ProductDTO>>> Get([FromQuery] string? desc, [FromQuery] int? minPrice, [FromQuery] int? MaxPrice, [FromQuery] int?[] categoryIds)
         {
 
-            List<Product>product= await _productService.getProductAsync(desc, minPrice, MaxPrice, categoryIds);
+            List<Product> product= await _productService.getProductAsync(desc, minPrice, MaxPrice, categoryIds);
             List<ProductDTO> productDTO = Mapper.Map<List<Product>, List<ProductDTO>>( product);
             return productDTO;
         }

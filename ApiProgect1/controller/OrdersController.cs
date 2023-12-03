@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Service;
 using DTO;
 using System.Collections.Generic;
+using Microsoft.Extensions.Hosting;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -39,13 +40,26 @@ namespace ApiProgect1.controller
         // POST api/<OrdersController>
         [HttpPost]
         [Route("post")]
-        public async Task<ActionResult<List<OrderDTO>>> postOrdersAsync(Order order)
+        public async Task<ActionResult<OrderDTO>>  post([FromBody]  OrderDTO order)
         {
-         List<Order> orders = await _ordersService.postOrdersAsync(order);
-            List<OrderDTO> OrdersDTO = Mapper.Map<List<Order>, List<OrderDTO>>(orders);
-            return OrdersDTO;
+            try {
+                Order Order = Mapper.Map<OrderDTO, Order>(order);
+                Order orders = await _ordersService.postOrdersAsync(Order);
+            OrderDTO OrdersDto = Mapper.Map<Order, OrderDTO>(orders);
+                if (OrdersDto != null)
+                    return CreatedAtAction(nameof(Get), new { id = OrdersDto.OrderId }, OrdersDto);
+                        return NoContent();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
-       
+        [HttpGet("{id}")]
+        public string Get(int id)
+        {
+            return "value";
+        }
 
         //// PUT api/<OrdersController>/5
         //[HttpPut("{id}")]
@@ -59,4 +73,4 @@ namespace ApiProgect1.controller
         //{
         //}
     }
-}
+}  

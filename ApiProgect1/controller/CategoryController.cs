@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DTO;
 using Entities;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Service;
 using System.Collections.Generic;
@@ -23,11 +24,13 @@ namespace ApiProgect1.controller
         }
         // GET: api/<CategoryController>
         [HttpGet]
-        public  async Task <ActionResult<IEnumerable<CategoryDTO>>> GetCategoriesAsync()
+        public  async Task <ActionResult<IEnumerable<CategoryDTO>>> Get()
         {
             IEnumerable <Category> categories = await _CategoryService.GetCategoriesAsync();
             IEnumerable<CategoryDTO> categoriesDTO = Mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(categories);
-            return categoriesDTO;
+            if(categoriesDTO!=null)
+            return Ok(categoriesDTO);
+            return BadRequest();
         }
         
 

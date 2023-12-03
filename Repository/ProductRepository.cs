@@ -15,7 +15,7 @@ namespace Repository
         {
             _InsertProductContext = InsertProductContext;
         }
-        public async Task<IEnumerable<Product>> getProductAsync( string? desc ,int? minPrice,int? MaxPrice, int?[]categoryIds)
+        public async Task<List<Product>> getProductAsync( string? desc ,int? minPrice,int? MaxPrice, int?[]categoryIds)
         {
             var quary = _InsertProductContext.Products.Where(product =>
             (desc == null) ? (true) : (product.ProductDescription.Contains(desc))
