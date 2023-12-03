@@ -1,6 +1,9 @@
-﻿using Entities;
+﻿using AutoMapper;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Service;
+using DTO;
+using System.Collections.Generic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,9 +16,11 @@ namespace ApiProgect1.controller
 
         private readonly IOrdersService _ordersService;
 
-        public OrdersController(IOrdersService ordersService)
+        private readonly IMapper Mapper;
+        public OrdersController(IOrdersService ordersService,IMapper mapper)
         {
             _ordersService = ordersService;
+            Mapper = mapper;
         }
         //// GET: api/<OrdersController>
         //[HttpGet]
@@ -33,9 +38,12 @@ namespace ApiProgect1.controller
 
         // POST api/<OrdersController>
         [HttpPost]
-        public async Task<Order> postOrdersAsync(Order order)
+        [Route("post")]
+        public async Task<ActionResult<List<OrderDTO>>> postOrdersAsync(Order order)
         {
-            return await _ordersService.postOrdersAsync(order);
+         List<Order> orders = await _ordersService.postOrdersAsync(order);
+            List<OrderDTO> OrdersDTO = Mapper.Map<List<Order>, List<OrderDTO>>(orders);
+            return OrdersDTO;
         }
        
 

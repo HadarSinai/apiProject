@@ -1,6 +1,7 @@
 ﻿  
-
-
+//להפוך לpost
+//לאפשר user
+//למחוק לפי id
 const login = async () => {
     try {
         const userNameLogin = document.getElementById("id").value;
@@ -30,7 +31,7 @@ const login = async () => {
 const link = async () => {
 
         isFlagSet = true
-        var myDiv = document.getElementById("input");
+        let myDiv = document.getElementById("input");
         if (isFlagSet) {
             myDiv.style.display = "block";
 
@@ -41,7 +42,7 @@ const link = async () => {
 
 
 }
-var flag = false;
+let flag = false;
 
 const checkPassword = async () => {
     try { 

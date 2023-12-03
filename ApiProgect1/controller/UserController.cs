@@ -1,6 +1,7 @@
 ﻿
 
 using ApiProgect1;
+using AutoMapper;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Session;
@@ -20,10 +21,12 @@ namespace Login.Controllers
 
         
         private readonly IUserService userService;
-        public UserController(IUserService _userService)
+
+        private readonly IMapper Mapper;
+        public UserController(IUserService _userService,IMapper mapper)
         {
             userService = _userService;
-
+            Mapper = mapper;
 
         }
 

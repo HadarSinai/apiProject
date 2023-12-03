@@ -26,6 +26,7 @@ builder.Services.AddDbContext<InsertProductContext>(option => option.UseSqlServe
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

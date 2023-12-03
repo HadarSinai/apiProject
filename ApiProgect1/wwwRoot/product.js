@@ -55,6 +55,7 @@ const getProducts = async (desc, minPrice, maxPrice, categoryIds) => {
 
             for (var j = 0; j < data.length; j++) {
                 showCategory(data[j]);
+
             }
         }
         catch (ex) {
@@ -82,9 +83,15 @@ const showCard = async (data) => {
         clone.querySelector("h1").innerText = data.productName
         clone.querySelector("p.price").innerText = data.productPrice+ "$"
     clone.querySelector("p.description").innerText = data.productDescription
-    clone.querySelector("button").addEventListener('click', () => { addToCart(data) })
- //
- //
+    
+    try {
+        clone.querySelector("button").addEventListener('click', () => { addToCart(data) })
+        
+    }
+    catch (ex) {
+        alert(ex)
+    }
+ 
  
         div.appendChild(clone)
     
@@ -101,7 +108,8 @@ const filterProducts = async () => {
     let minPrice = document.getElementById("minPrice").value;
     let maxPrice = document.getElementById("maxPrice").value;
         let desc = document.getElementById("nameSearch").value;
-    const products = await getProducts(desc, minPrice, maxPrice, checkedCategories);
+    let products = await getProducts(desc, minPrice, maxPrice, checkedCategories);
+  
     /*document.getElementById("prod").replaceChildren([]);*/
         for (var i = 0; i < products.length; i++) {
             let tmp = document.getElementById("temp-card");
@@ -110,19 +118,29 @@ const filterProducts = async () => {
             clone.querySelector("h1").innerText = products[i].productName;
             clone.querySelector(".description").innerText = products[i].productDescription
             clone.querySelector(".price").innerText = products[i].productPrice + "$";
+          
+            try {
+                clone.querySelector("button").addEventListener('click', () => { addToCart(products[i]) })
+               
+                }
+            catch (ex) {
+                alert(ex)
+            }
             document.getElementById("prod").appendChild(clone);
     }
 
 
 }
 
-let arrayCart = [];
-
-const addToCart =  (product) => {
-    arrayCart.push(product);
-    //document.getElementById("ItemsCountText").innerText = arrayCart.length
-     sessionStorage.setItem("ProductsCart", JSON.stringify(arrayCart));
-    alert("נוסף בהצלחה לסל")
-    console.log(arrayCart)
+let arrayCart=[]
+const addToCart = (product) => {
+    if (product != null) { 
+    arrayCart.push(product)
+    sessionStorage.setItem("ProductsCart", JSON.stringify(arrayCart));
+     
+   
+        alert("נוסף בהצלחה לסל");
+    }
+ alert(product)
 }
 
