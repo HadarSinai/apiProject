@@ -43,10 +43,15 @@ namespace Login.Controllers
 
             User user = await userService.getUserById(id);
             UserDTO userDTO = Mapper.Map<User,UserDTO>(user);
-            
+            try { 
             if (user != null)
                 return Ok(userDTO);
             return NoContent();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
 
 
@@ -110,7 +115,8 @@ namespace Login.Controllers
 
             if (answer > 2)
             {
-                return Ok();
+                //////////What Happen
+               return Ok(answer);
             }
             return BadRequest();
 

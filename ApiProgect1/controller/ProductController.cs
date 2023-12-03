@@ -21,40 +21,38 @@ namespace ApiProgect1.controller
             _productService = productService;
             Mapper = mapper;
         }
+
+
+
+
+
+
+
+
+
+
+
         // GET: api/<ProductController>
         [HttpGet]
         public async Task <ActionResult<List<ProductDTO>>> Get([FromQuery] string? desc, [FromQuery] int? minPrice, [FromQuery] int? MaxPrice, [FromQuery] int?[] categoryIds)
         {
+            try
+            {
 
+           
             List<Product> product= await _productService.getProductAsync(desc, minPrice, MaxPrice, categoryIds);
             List<ProductDTO> productDTO = Mapper.Map<List<Product>, List<ProductDTO>>( product);
-            return productDTO;
+            if(productDTO!=null)
+            return Ok(productDTO);
+            return BadRequest();
+            }
+            catch (Exception ex)
+            {
+                throw new Exception(ex.Message);
+            }
         }
        
 
-        //// GET api/<ProductController>/5
-        //[HttpGet("{id}")]
-        //public string Get(int id)
-        //{
-        //    return "value";
-        //}
-
-        // POST api/<ProductController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        //// PUT api/<ProductController>/5
-        //[HttpPut("{id}")]
-        //public void Put(int id, [FromBody] string value)
-        //{
-        //}
-
-        //// DELETE api/<ProductController>/5
-        //[HttpDelete("{id}")]
-        //public void Delete(int id)
-        //{
-        //}
+        
     }
 }

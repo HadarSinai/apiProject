@@ -46,6 +46,8 @@ const deleteCartProduct = (data) => {
  
   
 }
+//let index = myCart.findIndex(p => p.productId == product.productId);
+
 const placeOrder = async () => {
     let order = {
 
@@ -53,7 +55,7 @@ const placeOrder = async () => {
         orderSum:40,
             /*sum_money,*/
         orderDate: new Date(),
-        OrderItems: cart
+        OrderItems: []
     }
     try {
         const res = await fetch('api/Orders/post', {

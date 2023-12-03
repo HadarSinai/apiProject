@@ -138,9 +138,9 @@ const addToCart = (product) => {
     arrayCart.push(product)
     sessionStorage.setItem("ProductsCart", JSON.stringify(arrayCart));
      
-   
-        alert("נוסף בהצלחה לסל");
+        alert(`${product.productName } Added to cart`)
+     
     }
- alert(product)
+ 
 }
 
