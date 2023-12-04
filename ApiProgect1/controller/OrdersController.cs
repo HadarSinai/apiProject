@@ -33,10 +33,10 @@ namespace ApiProgect1.controller
             try {
                 Order Order = Mapper.Map<OrderDTO, Order>(order);
                 Order orders = await _ordersService.postOrdersAsync(Order);
-            OrderDTO OrdersDto = Mapper.Map<Order, OrderDTO>(orders);
+                OrderDTO OrdersDto = Mapper.Map<Order, OrderDTO>(orders);
                 if (OrdersDto != null)
                     return CreatedAtAction(nameof(Get), new { id = OrdersDto.OrderId }, OrdersDto);
-                        return NoContent();
+                return NoContent();
             }
             catch (Exception ex)
             {

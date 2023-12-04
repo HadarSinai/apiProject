@@ -25,6 +25,7 @@ namespace Repository
                 .OrderBy(product => product.ProductPrice);
             List<Product> products = await quary.ToListAsync();
             return products;
+          
             
         }
         

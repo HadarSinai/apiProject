@@ -4,6 +4,7 @@ using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Service;
 using System.Collections.Generic;
+using Repository;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -39,12 +40,13 @@ namespace ApiProgect1.controller
             try
             {
 
-           
-            List<Product> product= await _productService.getProductAsync(desc, minPrice, MaxPrice, categoryIds);
-            List<ProductDTO> productDTO = Mapper.Map<List<Product>, List<ProductDTO>>( product);
-            if(productDTO!=null)
-            return Ok(productDTO);
-            return BadRequest();
+
+                List<Entities.Product> products = await _productService.getProductAsync(desc, minPrice, MaxPrice, categoryIds);
+                List<Product> product = products;
+                List<ProductDTO> productDTO = Mapper.Map<List<Product>, List<ProductDTO>>(product);
+                if (productDTO != null)
+                    return Ok(productDTO);
+                return BadRequest();
             }
             catch (Exception ex)
             {

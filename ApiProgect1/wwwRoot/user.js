@@ -1,4 +1,4 @@
-﻿  
+﻿
 //להפוך לpost
 //לאפשר user
 //למחוק לפי id
@@ -83,6 +83,7 @@ flag=true}
     const register = async ()=> {
 
         try {
+            
         const userName = document.getElementById("userName").value;
         const password = document.getElementById("password").value;
         const firstName = document.getElementById("firstName").value;
@@ -97,6 +98,7 @@ flag=true}
                 },
                 body: JSON.stringify(user)
             });
+            console.log("uuuuuuuuuuuuuuu");
             if (!res.ok) {
                 console.log(res)
                 throw new Error("try agian,we cant saved the user")

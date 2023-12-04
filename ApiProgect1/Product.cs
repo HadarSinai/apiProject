@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Entities;
+namespace ApiProgect1;
 
 public partial class Product
 {

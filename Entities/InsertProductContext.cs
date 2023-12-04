@@ -1,24 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using Entities;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration;
 
-namespace Repository;
+namespace Entities;
 
 public partial class InsertProductContext : DbContext
 {
-    public IConfiguration _configuration { get; }
+    public InsertProductContext()
+    {
+    }
 
-
-
-
-
-    public InsertProductContext(DbContextOptions<InsertProductContext> options,IConfiguration configuration)
+    public InsertProductContext(DbContextOptions<InsertProductContext> options)
         : base(options)
     {
-        _configuration = configuration;
     }
 
     public virtual DbSet<Category> Categories { get; set; }
@@ -32,8 +26,8 @@ public partial class InsertProductContext : DbContext
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-
-        => optionsBuilder.UseSqlServer(_configuration.GetConnectionString("ShoesShoes"));
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+        => optionsBuilder.UseSqlServer("Server=srv2\\pupils;Database=InsertProduct;Trusted_Connection=True;TrustServerCertificate=True");
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -97,7 +91,6 @@ public partial class InsertProductContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.Property(e => e.UserId).ValueGeneratedNever();
             entity.Property(e => e.FirstName)
                 .HasMaxLength(30)
                 .IsFixedLength();

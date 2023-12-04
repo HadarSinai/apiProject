@@ -18,7 +18,6 @@ const send = () => {
         return;
     }
     for (let i = 0; i < cart.length; i++) {
-        alert(JSON.stringify( cart[i]))
         showCard(cart[i])
         
     }

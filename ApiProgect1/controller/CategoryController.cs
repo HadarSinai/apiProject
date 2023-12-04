@@ -26,12 +26,12 @@ namespace ApiProgect1.controller
         [HttpGet]
         public  async Task <ActionResult<IEnumerable<CategoryDTO>>> Get()
         {
-            try { 
-            IEnumerable <Category> categories = await _CategoryService.GetCategoriesAsync();
-            IEnumerable<CategoryDTO> categoriesDTO = Mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(categories);
-            if(categoriesDTO!=null)
-            return Ok(categoriesDTO);
-            return BadRequest();
+            try {
+                IEnumerable<Category> categories = await _CategoryService.GetCategoriesAsync();
+                IEnumerable<CategoryDTO> categoriesDTO = Mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(categories);
+                if (categoriesDTO != null)
+                    return Ok(categoriesDTO);
+                return BadRequest();
             }
             catch (Exception ex)
             {

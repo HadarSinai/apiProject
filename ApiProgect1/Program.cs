@@ -4,7 +4,7 @@ using Repository;
 using Service;
 using Microsoft.Extensions.Configuration;
 using NLog.Web;
-
+using Entities;
 
 var builder = WebApplication.CreateBuilder(args);
 

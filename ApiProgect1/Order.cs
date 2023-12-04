@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using Entities;
 
-namespace Entities;
+namespace ApiProgect1;
 
 public partial class Order
 {
