@@ -6,40 +6,44 @@ window.onload = async () => {
    
 }
 
-const getProducts = async (desc, minPrice, maxPrice, categoryIds) => {
+const getProducts = async (desc, minPrice, maxPrice, categoryItem) => {
+    let k;
     document.getElementById("prod").replaceChildren([]);
     
-   
-
-        let url = `https://localhost:44355/api/Product`;
-        if (desc || minPrice || maxPrice || categoryIds) url += `?`
-        if (desc) url += `&desc=${desc}`;
-        if (minPrice) url += `&minPrice=${minPrice}`;
-        if (maxPrice) url += `&maxPrice=${maxPrice}`;
-        if (categoryIds) {
-            for (let i = 0; i < categoryIds.length; i++) {
-                url += `&categoryIds=${categoryIds[i]}`
+    let url = `https://localhost:44355/api/Product`
+    if (desc || minPrice || maxPrice || categoryItem) {
+        url += `?&desc=${desc} &minPrice=${minPrice} &maxPrice=${maxPrice}`
+        if (categoryItem) {
+            for (k = 0; k < categoryItem.length; k++) {
+                url += `&categoryIds=${categoryItem[k]}`
             }
         }
-
-
+    }
         try {
             const res = await fetch(url)
             if (!res.ok) {
                 throw new Error("we  couldn't load  the products")
             }
-            const data = await res.json()
-            for (var i = 0; i < data.length; i++) {
-                console.log(data[i])
-                showCard(data[i])
-                return data;
+            const product = await res.json()
+            for (var i = 0; i < product.length; i++) {
+                showCard(product[i])
+                return product;
             }
         }
         catch (ex) {
-            console.log(ex)
             alert(ex)
 
-        }
+    }
+        //    let url = `https://localhost:44355/api/Product`;
+    //if (desc || minPrice || maxPrice || categoryItem) url += `?`
+    //    if (desc) url += `&desc=${desc}`;
+    //    if (minPrice) url += `&minPrice=${minPrice}`;
+    //    if (maxPrice) url += `&maxPrice=${maxPrice}`;
+    //if (categoryItem) {
+    //        for (let i = 0; i < categoryItem.length; i++) {
+    //            url += `&categoryIds=${categoryItem[i]}`
+    //        }
+    //    }
     }
 
 
@@ -76,40 +80,33 @@ const showCategory = async (category) => {
 
 const showCard = async (data) => {
     let div = document.getElementById("prod")
-    document.body.appendChild(div);
+    /*document.body.appendChild(div);*/
     let temp = document.getElementById("temp-card")
     let clone = temp.content.cloneNode(true)
     clone.querySelector("img").src = "./potos" + data.productImage
-        clone.querySelector("h1").innerText = data.productName
-        clone.querySelector("p.price").innerText = data.productPrice+ "$"
+    clone.querySelector("h1").innerText = data.productName
+    clone.querySelector("p.price").innerText = data.productPrice+ "$"
     clone.querySelector("p.description").innerText = data.productDescription
-    
-    try {
-        clone.querySelector("button").addEventListener('click', () => { addToCart(data) })
-        
-    }
-    catch (ex) {
-        alert(ex)
-    }
- 
- 
-        div.appendChild(clone)
+    clone.querySelector("button").addEventListener('click', () => { addToCart(data) })
+    div.appendChild(clone)
     
 }
 
 const filterProducts = async () => {
+    let j;
+  
     let checkedCategories = [];
-    const allCategoriesOptions = document.querySelectorAll(".opt");
+    const allCategoriescheck = document.getElementsByClassName("opt");
 
-        for (let i = 0; i < allCategoriesOptions.length; i++) {
-            if (allCategoriesOptions[i].checked)
-                checkedCategories.push(allCategoriesOptions[i].id)
+    for ( j = 0; j < allCategoriescheck.length; j++) {
+        if (allCategoriescheck[j].checked)
+            checkedCategories.push(allCategoriescheck[j].id)
         }
     let minPrice = document.getElementById("minPrice").value;
     let maxPrice = document.getElementById("maxPrice").value;
         let desc = document.getElementById("nameSearch").value;
     let products = await getProducts(desc, minPrice, maxPrice, checkedCategories);
-  
+    console.log(products);
     /*document.getElementById("prod").replaceChildren([]);*/
         for (var i = 0; i < products.length; i++) {
             let tmp = document.getElementById("temp-card");
@@ -118,14 +115,7 @@ const filterProducts = async () => {
             clone.querySelector("h1").innerText = products[i].productName;
             clone.querySelector(".description").innerText = products[i].productDescription
             clone.querySelector(".price").innerText = products[i].productPrice + "$";
-          
-            try {
-                clone.querySelector("button").addEventListener('click', () => { addToCart(products[i]) })
-               
-                }
-            catch (ex) {
-                alert(ex)
-            }
+            clone.querySelector("button").addEventListener('click', () => { addToCart(products[i])})
             document.getElementById("prod").appendChild(clone);
     }
 
@@ -143,4 +133,6 @@ const addToCart = (product) => {
     }
  
 }
-
+const TrackLinkID = () => {
+    sessionStorage.getItem("user") ? document.querySelector(".myAccount").href = "/Update.html" : document.querySelector(".myAccount").href = "/Login.html"
+}

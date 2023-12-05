@@ -23,7 +23,7 @@ builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IOrdersRepository, OrdersRepository>();
 builder.Services.AddTransient<IOrdersService, OrdersService>();
 
-builder.Services.AddDbContext<InsertProductContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("ShoesShoes")));
+builder.Services.AddDbContext<InsertProductContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("Shoes")));
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

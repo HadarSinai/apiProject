@@ -14,6 +14,7 @@ namespace ApiProgect1
             CreateMap<Product, ProductDTO>();
             CreateMap<User, UserDTO>().ReverseMap();
             CreateMap<User, UserLoginDTO>();
+            CreateMap<User, UserWithoutPassDTO>();
         }
     }
 }

@@ -15,9 +15,19 @@ namespace Service
         {
             _IProductRepository = IProductRepository;
         }
-        public async Task<List<Product>> getProductAsync(string? desc, int? minPrice, int? MaxPrice, int?[] categoryIds)
+        public async Task<List<Product>> getProductAsync(string? desc, int? minPrice, int? maxPrice, int?[] categoryIds)
         {
-            return await _IProductRepository.getProductAsync(desc ,  minPrice,  MaxPrice, categoryIds);
+            return await _IProductRepository.getProductAsync(desc ,  minPrice,  maxPrice, categoryIds);
         }
+
+        //public  decimal OrderSum(IEnumerable<OrderItem> orderItem,Order order)
+        //{
+        //    decimal sum = 0;
+        //   IEnumerable <OrderItem>orderItems= orderItem.Where(item => item.OrderId == order.OrderId);
+         
+        //    return sum;
+        //}
+  
+
     }
 }

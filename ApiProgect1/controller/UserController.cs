@@ -56,13 +56,15 @@ namespace Login.Controllers
 
 
 
-        [Route("postLogin")]
+        [Route("login")]
         [HttpPost]
-        async public Task<ActionResult<UserLoginDTO>> post([FromBody] User userLogin)
+        async public Task<ActionResult<UserWithoutPassDTO>> post([FromBody] UserLoginDTO userLogin)
         {
-            try { 
-            User user = await userService.getUserByUserNameAndPassword(userLogin.UserName,userLogin.Password);
-            UserDTO UserDTO = Mapper.Map<User, UserDTO>(user);
+            try {
+                User userCast = Mapper.Map<UserLoginDTO, User>(userLogin);
+
+                User user = await userService.getUserByUserNameAndPassword(userCast.UserName, userCast.Password);
+                UserWithoutPassDTO UserDTO = Mapper.Map<User, UserWithoutPassDTO>(user);
             if (UserDTO != null)
                 return Ok(UserDTO);
 
@@ -80,18 +82,18 @@ namespace Login.Controllers
         // POST api/<UsersController>
         [HttpPost]
         [Route("post")]
-        public async Task<ActionResult<UserLoginDTO>> Post([FromBody] UserDTO UserDto)
+        public async Task<ActionResult<UserWithoutPassDTO>> Post([FromBody] UserDTO UserDto)
         {
            
             try
             {
                 User user = Mapper.Map<UserDTO, User>(UserDto);
                 if (user != null)
-                   Logger.LogInformation($"new user {user.UserName}register");
+                   Logger.LogInformation($"new user {user.UserId}register");
                 User sendUser = await userService.addUser(user);
-                UserLoginDTO UserLDTO = Mapper.Map<User, UserLoginDTO>(sendUser);
-                int zero = 0;
-                int num= 10 / zero;
+                UserWithoutPassDTO UserLDTO = Mapper.Map<User, UserWithoutPassDTO>(sendUser);
+                //int zero = 0;
+                //int num= 10 / zero;
                 if(UserLDTO!=null)
               return CreatedAtAction(nameof(Get), new { id = sendUser.UserId }, UserLDTO);
                 return BadRequest();
@@ -126,12 +128,12 @@ namespace Login.Controllers
 
         // PUT api/<NewContro>/5
         [HttpPut("{id}")]
-        async public Task <ActionResult<User>> Put(int id, [FromBody] UserDTO userDTO )
+        async public Task <ActionResult<UserDTO>> Put(int id, [FromBody] UserDTO userDTO )
         {
             try {
                 User userToUpdate = Mapper.Map< UserDTO, User>(userDTO);
             User answer = await userService.updateUser(id, userToUpdate);
-                UserLoginDTO userLoginDTO = Mapper.Map<User, UserLoginDTO>(answer);
+                UserDTO userLoginDTO = Mapper.Map<User, UserDTO>(answer);
             if (answer!=null)
                 return Ok(answer);
             

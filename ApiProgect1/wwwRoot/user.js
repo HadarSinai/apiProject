@@ -1,5 +1,5 @@
 ﻿
-//להפוך לpost
+
 //לאפשר user
 //למחוק לפי id
 const login = async () => {
@@ -8,13 +8,13 @@ const login = async () => {
         const userNameLogin = document.getElementById("id").value;
             const passwordLogin = document.getElementById("pass").value;
         const login = { userNameLogin, passwordLogin };
-            const res = await fetch('api/User/postLogin',{ 
+            const res = await fetch('api/User/login',{ 
             method: 'POST',
                 headers: {
                 'Content-Type': 'application/json'
             },
            
-            body: JSON.stringify(login)
+                body: JSON.stringify(login)
         });
         
         if (!res.ok) {
@@ -106,7 +106,7 @@ flag=true}
             if (!flag)
                 throw new Error("try another password")
             const data = await res.json()
-            alert(`${data.userId} was added`);
+            alert(`${data.userName} was added`);
            
                 sessionStorage.setItem("user", JSON.stringify(data))
                      window.location.href = "./update.html"
