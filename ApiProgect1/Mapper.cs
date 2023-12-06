@@ -13,7 +13,7 @@ namespace ApiProgect1
            CreateMap<OrderItem, OrderItemDTO>().ReverseMap();
             CreateMap<Product, ProductDTO>();
             CreateMap<User, UserDTO>().ReverseMap();
-            CreateMap<User, UserLoginDTO>();
+            CreateMap<User, UserLoginDTO>().ReverseMap();
             CreateMap<User, UserWithoutPassDTO>();
         }
     }

@@ -32,7 +32,7 @@ const enterStore = async()=>{
     window.location.href = "./product.html"
 
 }
-  
+
 
 const updateDetailes = async () => {
     try {
@@ -44,17 +44,18 @@ const updateDetailes = async () => {
         
         const user = { userId, userName, password, firstName, lastName };
 
-        const responsePut = await fetch(`api/Users/${userId}`, {
+        const responsePut = await fetch(`api/User/${userId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(user)
         });
+        console.log(responsePut);
         if (!responsePut.ok) {
             throw new Error("We could not update")
         }
-        sessionStorage.setItem("user", JSON.stringify(user))
+        sessionStorage.setItem("user", JSON.stringify(responsePut))
         window.location.href = "./user.html"
     }
     catch (ex) {

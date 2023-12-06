@@ -3,11 +3,12 @@
 //לאפשר user
 //למחוק לפי id
 const login = async () => {
+
     try {
       
-        const userNameLogin = document.getElementById("id").value;
-            const passwordLogin = document.getElementById("pass").value;
-        const login = { userNameLogin, passwordLogin };
+        const userName = document.getElementById("id").value;
+        const password = document.getElementById("pass").value;
+        const login = {userName,password};
             const res = await fetch('api/User/login',{ 
             method: 'POST',
                 headers: {
@@ -15,19 +16,25 @@ const login = async () => {
             },
            
                 body: JSON.stringify(login)
+                
         });
-        
-        if (!res.ok) {
-            
+        console.log(res)
+        if (res.status == 204) {
+
             throw new Error("we  couldn't find your details")
         }
+        else
+            if (!res.ok) {
+            
+            throw new Error("try again")
+        }
+       
         
         const dataJson = await res.json()
         sessionStorage.setItem("user", JSON.stringify(dataJson))
         window.location.href = "./update.html"
     }
     catch (ex) {
-        console.log(ex)
         alert(ex)
         
     }
@@ -83,7 +90,8 @@ flag=true}
     const register = async ()=> {
 
         try {
-            
+           
+
         const userName = document.getElementById("userName").value;
         const password = document.getElementById("password").value;
         const firstName = document.getElementById("firstName").value;

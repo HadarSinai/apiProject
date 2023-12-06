@@ -6,6 +6,7 @@ using DTO;
 using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Session;
+using Microsoft.Extensions.Logging;
 using Service;
 using System.Net.Mail;
 using System.Text.Json;
@@ -65,13 +66,18 @@ namespace Login.Controllers
 
                 User user = await userService.getUserByUserNameAndPassword(userCast.UserName, userCast.Password);
                 UserWithoutPassDTO UserDTO = Mapper.Map<User, UserWithoutPassDTO>(user);
-            if (UserDTO != null)
-                return Ok(UserDTO);
+            if (UserDTO != null) {
+                    
+                  Logger.LogInformation("ggg");
+                  
+                    return Ok(UserDTO);
+                }
 
-            return NoContent();
+                return NoContent();
             }
             catch(Exception ex)
             {
+                
                 throw new Exception(ex.Message);
             }
         }
@@ -87,6 +93,7 @@ namespace Login.Controllers
            
             try
             {
+                
                 User user = Mapper.Map<UserDTO, User>(UserDto);
                 if (user != null)
                    Logger.LogInformation($"new user {user.UserId}register");
@@ -128,12 +135,12 @@ namespace Login.Controllers
 
         // PUT api/<NewContro>/5
         [HttpPut("{id}")]
-        async public Task <ActionResult<UserDTO>> Put(int id, [FromBody] UserDTO userDTO )
+        async public Task <ActionResult<UserWithoutPassDTO>> Put(int id, [FromBody] UserDTO userDTO )
         {
             try {
                 User userToUpdate = Mapper.Map< UserDTO, User>(userDTO);
             User answer = await userService.updateUser(id, userToUpdate);
-                UserDTO userLoginDTO = Mapper.Map<User, UserDTO>(answer);
+                UserWithoutPassDTO userLoginDTO = Mapper.Map<User, UserWithoutPassDTO>(answer);
             if (answer!=null)
                 return Ok(answer);
             
