@@ -72,7 +72,8 @@ const checkPassword = async () => {
     });
         if (!res.ok) {
             throw new Error("try agian,The password is not strong enough")
-flag=true}
+            flag = true
+        }
         
    // const data = await res.json()
         flag = true;
@@ -106,7 +107,7 @@ flag=true}
                 },
                 body: JSON.stringify(user)
             });
-            console.log("uuuuuuuuuuuuuuu");
+            console.log(res.status);
             if (!res.ok) {
                 console.log(res)
                 throw new Error("try agian,we cant saved the user")

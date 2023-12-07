@@ -1,4 +1,5 @@
-﻿const user = sessionStorage.getItem('user')
+﻿
+const user = sessionStorage.getItem('user')
 const parseUser = JSON.parse(user)
 
 window.onload = async () => {
@@ -41,8 +42,21 @@ const updateDetailes = async () => {
         const password = document.getElementById("password").value;
         const firstName = document.getElementById("firstName").value;
         const lastName = document.getElementById("lastName").value;
-        
+
+       /* let res = checkPassword(userId);*/
+      /*  if (res == true) {*/
+        //userId = userId.trim();
+        //userName = userName.trim();
+        //password = password.trim();
+        //firstName = firstName.trim();
+        //lastName = lastName.trim();
         const user = { userId, userName, password, firstName, lastName };
+        
+        
+        //}
+        //else
+       /* return (alert("try another password"))*/
+
 
         const responsePut = await fetch(`api/User/${userId}`, {
             method: 'PUT',
@@ -61,8 +75,38 @@ const updateDetailes = async () => {
     catch (ex) {
         alert(ex)
     }
-}   
+}
 
+
+
+
+
+
+
+const checkPassword =  async (userId) => {
+    try {
+       
+        const res = await fetch('api/User/postPassword', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(userId)
+        });
+        if (!res.ok) {
+            throw new Error("try agian,The password is not strong enough")
+            flag = true
+            return false
+        }
+        flag = true;
+        alert(`The password is strong`);
+       return true
+
+    }
+    catch (ex) {
+        alert(ex)
+    }
+}
 
 
 

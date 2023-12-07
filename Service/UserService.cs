@@ -36,6 +36,9 @@ namespace Service
         }
        async  public Task <User> updateUser(int id, User user)
         {
+            int res = checkPassword(user.Password);
+            if (res < 2)
+                return null;
             return await userRepository.UpdateUser(id, user);
         }
 

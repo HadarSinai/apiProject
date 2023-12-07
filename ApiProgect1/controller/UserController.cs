@@ -116,7 +116,7 @@ namespace Login.Controllers
         
 
         [HttpPost]
-        [Route("postPassword")]
+        [Route("postPassword")] 
          public IActionResult Post([FromBody] string password)
         {
 
@@ -138,6 +138,7 @@ namespace Login.Controllers
         async public Task <ActionResult<UserWithoutPassDTO>> Put(int id, [FromBody] UserDTO userDTO )
         {
             try {
+                userDTO.UserId = id;
                 User userToUpdate = Mapper.Map< UserDTO, User>(userDTO);
             User answer = await userService.updateUser(id, userToUpdate);
                 UserWithoutPassDTO userLoginDTO = Mapper.Map<User, UserWithoutPassDTO>(answer);
@@ -151,9 +152,8 @@ namespace Login.Controllers
                 throw new Exception(ex.Message);
             }
             }
-        
 
-       
+
 
 
         // DELETE api/<UsersController>/5

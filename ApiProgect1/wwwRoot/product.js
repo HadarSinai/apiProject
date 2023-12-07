@@ -1,15 +1,16 @@
 ﻿
 window.onload = async () => {
-   
+
     getCategory();
     filterProducts();
-   
+
 }
 
 const getProducts = async (desc, minPrice, maxPrice, categoryItem) => {
     let k;
+    //
     document.getElementById("prod").replaceChildren([]);
-    
+
     let url = `https://localhost:44355/api/Product`
     if (desc || minPrice || maxPrice || categoryItem) {
         url += `?&desc=${desc} &minPrice=${minPrice} &maxPrice=${maxPrice}`
@@ -29,21 +30,13 @@ const getProducts = async (desc, minPrice, maxPrice, categoryItem) => {
                 showCard(product[i])
                 return product;
             }
+            document.getElementById("counter").innerText = product.length;
         }
         catch (ex) {
             alert(ex)
 
     }
-        //    let url = `https://localhost:44355/api/Product`;
-    //if (desc || minPrice || maxPrice || categoryItem) url += `?`
-    //    if (desc) url += `&desc=${desc}`;
-    //    if (minPrice) url += `&minPrice=${minPrice}`;
-    //    if (maxPrice) url += `&maxPrice=${maxPrice}`;
-    //if (categoryItem) {
-    //        for (let i = 0; i < categoryItem.length; i++) {
-    //            url += `&categoryIds=${categoryItem[i]}`
-    //        }
-    //    }
+        
     }
 
 
@@ -66,7 +59,7 @@ const getProducts = async (desc, minPrice, maxPrice, categoryItem) => {
             alert(ex)
         }
     }
-    
+
 
 
 const showCategory = async (category) => {
@@ -85,16 +78,21 @@ const showCard = async (data) => {
     let clone = temp.content.cloneNode(true)
     clone.querySelector("img").src = "./potos" + data.productImage
     clone.querySelector("h1").innerText = data.productName
-    clone.querySelector("p.price").innerText = data.productPrice+ "$"
-    clone.querySelector("p.description").innerText = data.productDescription
+    clone.querySelector(".price").innerText = data.productPrice + "$"
+ /*   clone.querySelector(".category").innerText = data.categoryName;*/
+    clone.querySelector(".description").innerText = data.productDescription
     clone.querySelector("button").addEventListener('click', () => { addToCart(data) })
     div.appendChild(clone)
+    if (sessionStorage.cart != undefined) {
+        document.getElementById("ItemsCountText").innerText = (JSON.parse(sessionStorage.getItem("ProductsCart"))).length;
+    }
     
+
 }
 
 const filterProducts = async () => {
     let j;
-  
+
     let checkedCategories = [];
     const allCategoriescheck = document.getElementsByClassName("opt");
 
@@ -117,6 +115,7 @@ const filterProducts = async () => {
             clone.querySelector(".price").innerText = products[i].productPrice + "$";
             clone.querySelector("button").addEventListener('click', () => { addToCart(products[i])})
             document.getElementById("prod").appendChild(clone);
+            document.getElementById("counter").innerText = products.length;
     }
 
 
@@ -124,14 +123,14 @@ const filterProducts = async () => {
 
 let arrayCart=[]
 const addToCart = (product) => {
-    if (product != null) { 
+    if (product != undefined) {
     arrayCart.push(product)
     sessionStorage.setItem("ProductsCart", JSON.stringify(arrayCart));
-     
+
         alert(`${product.productName } Added to cart`)
-     
+
     }
- 
+
 }
 const TrackLinkID = () => {
     sessionStorage.getItem("user") ? document.querySelector(".myAccount").href = "/Update.html" : document.querySelector(".myAccount").href = "/Login.html"
