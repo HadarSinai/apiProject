@@ -1,0 +1,87 @@
+﻿Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (14ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (9ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT 1
+Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT OBJECT_ID(N'[__EFMigrationsHistory]');
+Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      SELECT [MigrationId], [ProductVersion]
+      FROM [__EFMigrationsHistory]
+      ORDER BY [MigrationId];
+Microsoft.EntityFrameworkCore.Migrations[20402]
+      Applying migration '20231210002757_InitialCreate'.
+Applying migration '20231210002757_InitialCreate'.
+Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (2ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Category] (
+          [CategoryId] int NOT NULL IDENTITY,
+          [CategoryName] nchar(20) NULL,
+          CONSTRAINT [PK_Category] PRIMARY KEY ([CategoryId])
+      );
+Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Users] (
+          [UserId] int NOT NULL IDENTITY,
+          [UserName] nchar(40) NOT NULL,
+          [Password] nchar(50) NOT NULL,
+          [FirstName] nchar(30) NULL,
+          [LastName] nchar(30) NULL,
+          CONSTRAINT [PK_Users] PRIMARY KEY ([UserId])
+      );
+Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Products] (
+          [ProductId] int NOT NULL IDENTITY,
+          [CategoryId] int NOT NULL,
+          [ProductName] nchar(10) NOT NULL,
+          [ProductPrice] money NOT NULL,
+          [ProductDescription] nchar(50) NULL,
+          [ProductImage] nchar(20) NULL,
+          CONSTRAINT [PK_Products_1] PRIMARY KEY ([ProductId]),
+          CONSTRAINT [FK_Products_Products] FOREIGN KEY ([CategoryId]) REFERENCES [Category] ([CategoryId])
+      );
+Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [Orders] (
+          [OrderId] int NOT NULL IDENTITY,
+          [UserId] int NOT NULL,
+          [OrderSum] money NULL,
+          [OrderDate] date NULL,
+          CONSTRAINT [PK_ApiOrder] PRIMARY KEY ([OrderId]),
+          CONSTRAINT [FK_Orders_Users] FOREIGN KEY ([UserId]) REFERENCES [Users] ([UserId])
+      );
+Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE TABLE [OrderItem] (
+          [OrderItemId] int NOT NULL IDENTITY,
+          [ProductId] int NOT NULL,
+          [OrderId] int NOT NULL,
+          [Quantity] int NOT NULL,
+          CONSTRAINT [PK_OrderItem] PRIMARY KEY ([OrderItemId]),
+          CONSTRAINT [FK_OrderItem_Orders] FOREIGN KEY ([OrderId]) REFERENCES [Orders] ([OrderId]),
+          CONSTRAINT [FK_OrderItem_Products] FOREIGN KEY ([ProductId]) REFERENCES [Products] ([ProductId])
+      );
+Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (4ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_OrderItem_OrderId] ON [OrderItem] ([OrderId]);
+Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_OrderItem_ProductId] ON [OrderItem] ([ProductId]);
+Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Orders_UserId] ON [Orders] ([UserId]);
+Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (0ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      CREATE INDEX [IX_Products_CategoryId] ON [Products] ([CategoryId]);
+Microsoft.EntityFrameworkCore.Database.Command[20101]
+      Executed DbCommand (1ms) [Parameters=[], CommandType='Text', CommandTimeout='30']
+      INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+      VALUES (N'20231210002757_InitialCreate', N'7.0.13');
+Done.

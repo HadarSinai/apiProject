@@ -18,19 +18,20 @@ namespace ApiProgect1.controller
         private readonly IOrdersService _ordersService;
 
         private readonly IMapper Mapper;
-        public OrdersController(IOrdersService ordersService,IMapper mapper)
+        public OrdersController(IOrdersService ordersService, IMapper mapper)
         {
             _ordersService = ordersService;
             Mapper = mapper;
         }
-      
+
 
         // POST api/<OrdersController>
         [HttpPost]
         [Route("post")]
-        public async Task<ActionResult<OrderDTO>>  post([FromBody]  OrderDTO order)
+        public async Task<ActionResult<OrderDTO>> post([FromBody] OrderDTO order)
         {
-            try {
+            try
+            {
                 Order Order = Mapper.Map<OrderDTO, Order>(order);
                 Order orders = await _ordersService.postOrdersAsync(Order);
                 OrderDTO OrdersDto = Mapper.Map<Order, OrderDTO>(orders);
@@ -49,6 +50,6 @@ namespace ApiProgect1.controller
             return "value";
         }
 
-     
+
     }
-}  
+}

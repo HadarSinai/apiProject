@@ -3,13 +3,14 @@
 <head>
     <meta charset="utf-8" />
     <title>Welcome</title>
-   
-    <script src="user.js"></script>
+
+    <script src="script/user.js"></script>
+    
 </head>
-<body style="background-color:lavender">
+<body style="background-color:lavender;margin-left:700px;margin-top:100px">
 
 
-    <input placeholder="שם משתמש"  id="id"/>
+    <input placeholder="שם משתמש" id="id" />
     <br />
     <input type="password" placeholder="סיסמא" id="pass" />
     <br />
@@ -17,14 +18,14 @@
     <br />
     <button onclick="link()">להרשמה למערכת</button>
 
-   
+
 
     <!----------------------------------------------------->
     <div id="input" style="display:none">
         <br />
-        <input placeholder="userName"   id="userName"/>
-         <br />
-        <input type="password" placeholder="password"  id="password" onchange="checkPassword()"/>
+        <input placeholder="userName" id="userName"  />
+        <br />
+        <input type="password" placeholder="password" id="password" onchange="checkPassword()" />
         <br />
         <input placeholder="firstName" id="firstName" />
         <br />

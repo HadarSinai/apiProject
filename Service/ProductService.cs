@@ -20,14 +20,20 @@ namespace Service
             return await _IProductRepository.getProductAsync(desc ,  minPrice,  maxPrice, categoryIds);
         }
 
-        //public  decimal OrderSum(IEnumerable<OrderItem> orderItem,Order order)
-        //{
-        //    decimal sum = 0;
-        //   IEnumerable <OrderItem>orderItems= orderItem.Where(item => item.OrderId == order.OrderId);
-         
-        //    return sum;
-        //}
-  
+        
+        public async Task<bool> getOrderProducts(decimal sumOrder, int[] IdProducts)
+        {
+            List<Product> products = await _IProductRepository.getOrderProducts(IdProducts);
+            decimal amount = products.Sum(s => s.ProductPrice);
+            if (amount == sumOrder)
+
+                return true;
+            else
+                return false;
+
+
+        }
+    }
 
     }
-}
+

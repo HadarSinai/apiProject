@@ -37,40 +37,29 @@ const enterStore = async()=>{
 
 const updateDetailes = async () => {
     try {
-        const userId = parseUser.userId;
-        const userName = document.getElementById("userName").value;
-        const password = document.getElementById("password").value;
-        const firstName = document.getElementById("firstName").value;
-        const lastName = document.getElementById("lastName").value;
+        const UserId = parseUser.userId;
+        const UserName = document.getElementById("userName").value;
+        const Password = document.getElementById("password").value;
+        const FirstName = document.getElementById("firstName").value;
+        const LastName = document.getElementById("lastName").value;
 
-       /* let res = checkPassword(userId);*/
-      /*  if (res == true) {*/
-        //userId = userId.trim();
-        //userName = userName.trim();
-        //password = password.trim();
-        //firstName = firstName.trim();
-        //lastName = lastName.trim();
-        const user = { userId, userName, password, firstName, lastName };
-        
-        
-        //}
-        //else
-       /* return (alert("try another password"))*/
+        const User = { UserId, UserName, Password, FirstName, LastName };
 
 
-        const responsePut = await fetch(`api/User/${userId}`, {
+        const responsePut = await fetch(`api/User/${UserId}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(user)
+            body: JSON.stringify(User)
         });
-        console.log(responsePut);
+       
         if (!responsePut.ok) {
             throw new Error("We could not update")
         }
-        sessionStorage.setItem("user", JSON.stringify(responsePut))
-        window.location.href = "./user.html"
+        const answer = await responsePut.json();
+        sessionStorage.setItem('user', JSON.stringify(answer))
+        window.location.href = "./ShoppingBag.html"
     }
     catch (ex) {
         alert(ex)
