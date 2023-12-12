@@ -12,7 +12,7 @@ window.onload = () => {
 
 
 const send = () => {
-    // const data = await sessionStorage.getItem("ProductsCart")
+
     allSum = 0;
     if (!sessionStorage.getItem("user")) {
         alert("you move login")
@@ -21,8 +21,6 @@ const send = () => {
     }
 
     document.querySelector(".itemsColumn").innerText = cart.length + "פריטים"
-
-
 
     for (let i = 0; i < cart.length; i++) {
         allSum += cart[i].productPrice
@@ -51,7 +49,7 @@ const deleteCartProduct = (data) => {
     cart = cart.filter(prod => prod != data);
     sessionStorage.setItem("ProductsCart", JSON.stringify(cart))
     document.querySelector("tbody").innerHTML = '';
-        send();
+    send();
 
 
 }
@@ -76,8 +74,8 @@ const placeOrder = async () => {
         OrderItems: []
     }
     for (let i = 0; i < cartProducts.length; i++) {
-       
-       
+
+
         if (WasOrderItems.length == 0) {
             WasOrderItems.push(cartProducts[i])
             amount = cartProducts.filter(l => l.productId == cartProducts[i].productId).length
@@ -85,61 +83,60 @@ const placeOrder = async () => {
                 ProductId: cartProducts[i].productId,
                 Quantity: amount
             }
-            tempOrderItem = [...tempOrderItem, orderItem] 
+            tempOrderItem = [...tempOrderItem, orderItem]
         }
         else {
-            was = WasOrderItems.find(s => s.productId== cartProducts[i].productId)
-        amount = cartProducts.filter(l => l.productId == cartProducts[i].productId).length
-     
-        if (was == undefined) {//הופעה ראשונה
+            was = WasOrderItems.find(s => s.productId == cartProducts[i].productId)
+            amount = cartProducts.filter(l => l.productId == cartProducts[i].productId).length
 
-            if (amount > 1)
-                quantity = amount;
-            else
-                if (amount == 1)
-                    quantity = 1;
+            if (was == undefined) {
 
-            orderItem = {
-                ProductId: cartProducts[i].productId,
-                Quantity: quantity
-            }
-            WasOrderItems = [...WasOrderItems, cartProducts[i]]
-            tempOrderItem = [...tempOrderItem, orderItem] 
+                if (amount > 1)
+                    quantity = amount;
+                else
+                    if (amount == 1)
+                        quantity = 1;
+
+                orderItem = {
+                    ProductId: cartProducts[i].productId,
+                    Quantity: quantity
+                }
+                WasOrderItems = [...WasOrderItems, cartProducts[i]]
+                tempOrderItem = [...tempOrderItem, orderItem]
             }
         }
-        
+
     }
     order.OrderItems = tempOrderItem
 
     try {
         let url = `api/Product/checkSumOrder?&sumOrder=${allSum}`
-            for (let t = 0; t < cartProducts.length; t++) {
-                idProducts.push(cartProducts[t].productId)
-                url += `&IdProducts=${cartProducts[t].productId}`
+        for (let t = 0; t < cartProducts.length; t++) {
+            idProducts.push(cartProducts[t].productId)
+            url += `&IdProducts=${cartProducts[t].productId}`
         }
-       
-        
+
+
         alert(url)
         const res = await fetch(url)
-           
-            const bool = await res.json();
-               alert(bool)
-            if (bool==false) {
-                alert("סכום ההזמנה אינו תקין")
-                return;
-            }
-            
 
-
-        }
-        catch (ex) {
-            alert(ex)
+        const bool = await res.json();
+        alert(bool)
+        if (bool == false) {
+            alert("סכום ההזמנה אינו תקין")
+            return;
         }
 
-    
 
-   
 
+    }
+    catch (ex) {
+        alert(ex)
+    }
+    saveOrder(order)
+}
+
+const saveOrder = async (order) => {
 
     try {
         const res = await fetch('api/Orders/post', {

@@ -1,7 +1,6 @@
 ﻿
 
-//לאפשר user
-//למחוק לפי id
+
 const login = async () => {
 
     try {
