@@ -1,6 +1,6 @@
 You are entering my first WEB Api website, welcome!
 
-application description: The project is literally a shoe store.
+application description: The project is implements a shoe store.
 It includes an identification page: new user has an option to register.
 After identification, you have two options : update your personal identification information, 
 or turn into a beautiful shoe store.
