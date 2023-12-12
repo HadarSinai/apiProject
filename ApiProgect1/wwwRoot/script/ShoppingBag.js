@@ -118,7 +118,7 @@ const placeOrder = async () => {
         const res = await fetch(url)
 
         const bool = await res.json();
-        
+
         if (bool == false) {
             alert("סכום ההזמנה אינו תקין")
             return;
