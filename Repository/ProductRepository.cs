@@ -15,7 +15,7 @@ namespace Repository
         {
             _InsertProductContext = InsertProductContext;
         }
-        public async Task<List<Product>> getProductAsync( string? desc ,int? minPrice,int? maxPrice, int?[]categoryIds)
+        public async Task<List<Product>> getProductAsync(string? desc, int? minPrice, int? maxPrice, int?[] categoryIds)
         {
             var quary = _InsertProductContext.Products.Where(product =>
             ((desc == null) ? (true) : (product.ProductDescription.Contains(desc)))
@@ -25,20 +25,22 @@ namespace Repository
             .OrderBy(product => product.ProductPrice);
             List<Product> products = await quary.ToListAsync();
             return products;
-          
-            
+
+
         }
         public async Task<List<Product>> getOrderProducts(int[] IdProducts)
         {
+            List<Product>ids = new List<Product>();
+            foreach (var item in IdProducts) {
+                var id=  _InsertProductContext.Products.Where(p=>p.ProductId==item);
+                ids.AddRange(id.ToList());
+            }
+          
+            return ids;
+
             
-            var query = _InsertProductContext.Products.Where( prod => IdProducts.Contains(prod.ProductId));
-
-            List<Product> OrderProducts = await query.ToListAsync();
-            return OrderProducts;
-
-
         }
-       
+
 
     }
 }

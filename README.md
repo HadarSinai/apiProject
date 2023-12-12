@@ -1,6 +1,6 @@
 You are entering my first WEB Api website, welcome!
 
-application description: The project is implements a shoe store.
+application description: The project is implements a shoes store.
 It includes an identification page: new user has an option to register.
 After identification, you have two options : update your personal identification information, 
 or turn into a beautiful shoe store.
@@ -23,5 +23,5 @@ In order to run the app, you need: vs version 2022. DB-SQL.
 To create the DB, you can use code first abilities
 To get started: Open your package manager console,
 
-Write: 1. Add-Migration [MyDataBaseName] 2.Update-DataBase. the DB is ready!
+Write: 1. Add-Migration [MyDataBaseName] 2.Update-DataBase. now the DB is ready!
 

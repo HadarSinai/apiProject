@@ -24,23 +24,10 @@ namespace Service
 
         public async Task<bool> getOrderProducts(decimal sumOrder, int[] IdProducts)
         {
-          decimal sum=0;
-            
             List<Product> products = await _IProductRepository.getOrderProducts(IdProducts);
-            if (IdProducts.Length != products.Count)
-            {
-                var itemsNotInIdProducts = IdProducts.Except(products.Select(s => s.ProductId));
-                foreach (var item in itemsNotInIdProducts)
-                {
-                    sum +=products.Find(p => p.ProductId == item).ProductPrice;
-                    
-                    ///עזרה
-                };
-            }
-            
 
-        decimal sumOrderServer = products.Sum(s => s.ProductPrice);
-            sumOrderServer += sum;
+            decimal sumOrderServer = products.Sum(s => s.ProductPrice);
+
             if (sumOrderServer == sumOrder)
 
                 return true;

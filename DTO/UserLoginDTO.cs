@@ -13,6 +13,7 @@ namespace DTO
 
         [EmailAddress]
         public string UserName { get; set; } = null!;
+
         [MaxLength(50)]
         public string Password { get; set; } = null!;
     }

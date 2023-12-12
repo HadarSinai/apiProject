@@ -115,13 +115,10 @@ const placeOrder = async () => {
             idProducts.push(cartProducts[t].productId)
             url += `&IdProducts=${cartProducts[t].productId}`
         }
-
-
-        alert(url)
         const res = await fetch(url)
 
         const bool = await res.json();
-        alert(bool)
+        
         if (bool == false) {
             alert("סכום ההזמנה אינו תקין")
             return;

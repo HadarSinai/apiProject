@@ -100,13 +100,11 @@ const showCategory = (category) => {
 
 const showCard = (data) => {
     let div = document.getElementById("prod")
-    /*document.body.appendChild(div);*/
     let temp = document.getElementById("temp-card")
     let clone = temp.content.cloneNode(true)
 
     clone.querySelector("h1").innerText = data.productName
     clone.querySelector(".price").innerText = data.productPrice + "$"
-    /*   clone.querySelector(".category").innerText = data.categoryName;*/
     clone.querySelector(".description").innerText = data.productDescription
     clone.querySelector("img").src = "./potos/" + data.productImage
     clone.querySelector("button").addEventListener('click', () => { addToCart(data) })
@@ -156,12 +154,8 @@ const addToCart = (product) => {
     sessionStorage.setItem("ProductsCart", JSON.stringify(arrayCart));
 
     alert(`${product.productName} Added to cart`)
-    //cart = cart.filter(prod => prod != data);
-    //sessionStorage.setItem("ProductsCart", JSON.stringify(cart))
-    //document.querySelector("tbody").replaceChildren([])
+
 }
 
 
-//const TrackLinkID = () => {
-//    sessionStorage.getItem("user") ? document.querySelector(".myAccount").href = "/Update.html" : document.querySelector(".myAccount").href = "/Login.html"
-//}
+

@@ -17,7 +17,7 @@ namespace Repository
         }
         public async Task<IEnumerable<Category>> getCategoriesAsync()
         {
-          
+
             return await _InsertProductContext.Categories.ToListAsync();
         }
 

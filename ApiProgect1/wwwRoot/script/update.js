@@ -9,8 +9,6 @@ window.onload = async () => {
 const link = async () => {
     const userName = document.getElementById("userName");
     userName.value = parseUser.userName;
-   /* const password = document.getElementById("password");*/
-   /* password.value = parseUser.password;*/
     const firstName = document.getElementById("firstName");
     firstName.value = parseUser.firstName;
     const lastName = document.getElementById("lastName");
