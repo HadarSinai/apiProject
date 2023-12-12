@@ -50,53 +50,66 @@ const showCard = (data) => {
 const deleteCartProduct = (data) => {
     cart = cart.filter(prod => prod != data);
     sessionStorage.setItem("ProductsCart", JSON.stringify(cart))
-    document.querySelector("tbody").replaceChildren([])
-
-    send();
+    document.querySelector("tbody").innerHTML = '';
+        send();
 
 
 }
 
 
 const placeOrder = async () => {
-
-
     let quantity = 0;
-    let orderItem = [];
+    let tempOrderItem = [];
     let WasOrderItems = [];
     let order;
     let was;
-    let ids = [];
+    let amount;
     let idProducts = [];
 
     let res = sessionStorage.getItem("ProductsCart")
     let cartProducts = JSON.parse(res);
 
+    order = {
+        userId: users.userId,
+        orderSum: allSum,
+        orderDate: new Date(),
+        OrderItems: []
+    }
     for (let i = 0; i < cartProducts.length; i++) {
-        //allSum += cartProducts[i].productPrice;
-
+       
+        alert(i)
         if (WasOrderItems.length == 0) {
-            WasOrderItems.push(cartProducts[i].productId)
-
-        }
-        else
-            was = WasOrderItems.filter(s => s.productId != cartProducts[i].productId).length
-        ids = cartProducts.filter(l => l.productId == cartProducts[i].productId).length
-        //
-        if (was != null) {
-
-            if (ids > 1)
-                quantity = ids;
-            else
-                if (ids.length == 1)
-                    quantity = 1;
+            WasOrderItems.push(cartProducts[i])
+            amount = cartProducts.filter(l => l.productId == cartProducts[i].productId).length
             orderItem = {
-                ProductId: cartProducts[i].productId
-                ,
+                ProductId: cartProducts[i].productId,
+                Quantity: amount
+            }
+            tempOrderItem = [...tempOrderItem, orderItem] 
+        }
+        else {
+            was = WasOrderItems.find(s => s.productId== cartProducts[i].productId)
+        amount = cartProducts.filter(l => l.productId == cartProducts[i].productId).length
+      alert(was)
+        if (was == undefined) {//הופעה ראשונה
+
+            if (amount > 1)
+                quantity = amount;
+            else
+                if (amount == 1)
+                    quantity = 1;
+
+            orderItem = {
+                ProductId: cartProducts[i].productId,
                 Quantity: quantity
             }
-            WasOrderItems = [...WasOrderItems, cartProducts[i].productId]
+            WasOrderItems = [...WasOrderItems, cartProducts[i]]
+            tempOrderItem = [...tempOrderItem, orderItem] 
+            }
         }
+        
+    }
+    order.OrderItems = tempOrderItem
         try {
             for (let t = 0; t < cartProducts.length; t++) {
                 idProducts.push(cartProducts[t].productId)
@@ -107,12 +120,7 @@ const placeOrder = async () => {
                 alert("סכום ההזמנה אינו תקין")
                 return;
             }
-            order = {
-                userId: users.userId,
-                orderSum: allSum,
-                orderDate: new Date(),
-                OrderItems: []
-            }
+            
 
 
         }
@@ -120,9 +128,9 @@ const placeOrder = async () => {
             alert(ex)
         }
 
-    }
+    
 
-    order.OrderItems = [...order.OrderItems, orderItem]
+   
 
 
     try {

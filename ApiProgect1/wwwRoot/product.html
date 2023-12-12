@@ -5,30 +5,32 @@
     <link href="style/product.css" rel="stylesheet" />
     <meta charset="utf-8" />
     <title>Shoes Store</title>
+
+
+    <template id="temp-card">
+        <div class="card">
+            <div class="img-w">
+                <img src="tmp.jpg" alt="" style="width:100%">
+            </div>
+            <h1></h1>
+            <p class="price"></p>
+            <p class="description"></p>
+            <p><button>הוסף לסל</button></p>
+        </div>
+    </template>
+   
     <template id="temp-category">
         <div class="cb checkbox">
-
-            <input type="checkbox" class="opt" id="" value="">
+            <input type="checkbox" class="opt" id="" onclick="filterProducts()" value="">
+           
             <label for="">
                 <span class="OptionName"></span>
                 <span class="Count"></span>
             </label>
         </div>
     </template>
-   
-        <template id="temp-card">
-            <div class="card">
-                <div class="img-w">
-                    <img src="tmp.jpg" alt="" style="width:100%">
-                </div>
-                <h1></h1>
-                <p class="price"></p>
-                <p class="description"></p>
-                <p><button>הוסף לסל</button></p>
-            </div>
-        </template>
-    
-    <template id="temp-category">
+
+    <!--<template id="temp-category">
         <div class="cb checkbox">
             <input type="checkbox" class="opt" id="" value="">
             <label for="">
@@ -36,7 +38,7 @@
                 <span class="Count"></span>
                 </label>
         </div>
-    </template>
+    </template>-->
 </head>
 
 <body>
@@ -95,6 +97,7 @@
             <input type="text" id="nameSearch" class="floatRight" placeholder="חיפוש לפי שם מוצר">
 
             <button class="floatRight" tabindex="0" onclick="filterProducts()">
+            
                 <span class="header42"><img src="icons/searchIcon.svg" alt="סמל חיפוש"></span>
             </button>
         </div>

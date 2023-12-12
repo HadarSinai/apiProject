@@ -3,21 +3,21 @@ window.onload = async () => {
 
     getCategory();
     filterProducts();
-   
+
     let data = sessionStorage.getItem("ProductsCart")
-    let prod=JSON.parse(data)
+    let prod = JSON.parse(data)
     if (prod == undefined)
         document.getElementById("ItemsCountText").innerText = 0;
-    else { 
+    else {
         document.getElementById("ItemsCountText").innerText = prod.length;
-        
+
     }
 }
 
 const getProducts = async (desc, minPrice, maxPrice, categoryItem) => {
     let k;
     //
-    document.getElementById("prod").replaceChildren([]);
+    document.getElementById("prod").innerHTML = '';
 
     let url = `https://localhost:44355/api/Product?`
     if (desc)
@@ -28,8 +28,10 @@ const getProducts = async (desc, minPrice, maxPrice, categoryItem) => {
     }
     if (categoryItem) {
         for (k = 0; k < categoryItem.length; k++) {
-            url += `&categoryIds=${categoryItem[k].id}`
+            url += `&categoryIds=${categoryItem[k]}`
+
         }
+
     }
 
     try {
@@ -37,9 +39,9 @@ const getProducts = async (desc, minPrice, maxPrice, categoryItem) => {
         if (!res.ok) {
             throw new Error("we  couldn't load  the products")
         }
-        
+
         const product = await res.json()
-        
+
         document.getElementById("counter").innerText = product.length;
         for (var i = 0; i < product.length; i++) {
             showCard(product[i])
@@ -56,7 +58,6 @@ const getProducts = async (desc, minPrice, maxPrice, categoryItem) => {
 }
 
 const getMaxAndMin = (products) => {
-    alert("good")
     let minValue = Math.min(...products);
     let MaxValue = Math.max(...products);
     document.getElementById("minPrice").value = minValue;
@@ -86,16 +87,18 @@ const getCategory = async () => {
 
 
 
-const showCategory =  (category) => {
+const showCategory = (category) => {
     let div = document.getElementById("categoryList")
     let temp = document.getElementById("temp-category")
     let clone = temp.content.cloneNode(true)
-    clone.querySelector("span.OptionName").innerText = category.categoryName
+    let checkbox = clone.querySelector(".opt");
+    checkbox.id = category.categoryId;
+    clone.querySelector(".OptionName").innerText = category.categoryName;
     div.appendChild(clone)
 }
 
 
-const showCard =  (data) => {
+const showCard = (data) => {
     let div = document.getElementById("prod")
     /*document.body.appendChild(div);*/
     let temp = document.getElementById("temp-card")
@@ -117,39 +120,45 @@ const showCard =  (data) => {
 }
 
 const filterProducts = async () => {
-    let j;
+    let MAndm = []
+    let checkedCategories = []
 
-    let checkedCategories = [];
-    let MAndm=[]
-    const allCategoriescheck = document.getElementsByClassName("opt");
-
-    for (j = 0; j < allCategoriescheck.length; j++) {
-        if (allCategoriescheck[j].checked)
-            checkedCategories.push(allCategoriescheck[j].id)
+    let allCategoriesOptions = document.querySelectorAll(".opt");
+    for (let i = 0; i < allCategoriesOptions.length; i++) {
+        if (allCategoriesOptions[i].checked) {
+            checkedCategories.push(allCategoriesOptions[i].id)
+        }
     }
     let minPrice = document.getElementById("minPrice").value;
     let maxPrice = document.getElementById("maxPrice").value;
     let desc = document.getElementById("nameSearch").value;
     let products = await getProducts(desc, minPrice, maxPrice, checkedCategories);
-    MAndm = products.map(prod=>prod.productPrice)
+    MAndm = products.map(prod => prod.productPrice)
     getMaxAndMin(MAndm);
-    
+
 
 
 }
 
 let arrayCart = []
 const addToCart = (product) => {
-   
+
     document.getElementById("ItemsCountText").innerText++;
-    if (product != undefined) {
-        arrayCart = [...arrayCart,product]
-        sessionStorage.setItem("ProductsCart", JSON.stringify(arrayCart));
-
-        alert(`${product.productName} Added to cart`)
-
+    let data = sessionStorage.getItem("ProductsCart")
+    arrayCart = JSON.parse(data)
+    if (arrayCart == null) {
+        arrayCart = []
+        arrayCart.push(product);
     }
+    else if (arrayCart != null) {
+        arrayCart = [...arrayCart, product]
+    }
+    sessionStorage.setItem("ProductsCart", JSON.stringify(arrayCart));
 
+    alert(`${product.productName} Added to cart`)
+    //cart = cart.filter(prod => prod != data);
+    //sessionStorage.setItem("ProductsCart", JSON.stringify(cart))
+    //document.querySelector("tbody").replaceChildren([])
 }
 
 
