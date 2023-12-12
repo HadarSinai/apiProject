@@ -30,6 +30,7 @@ namespace Repository
         }
         public async Task<List<Product>> getOrderProducts(int[] IdProducts)
         {
+            
             var query = _InsertProductContext.Products.Where( prod => IdProducts.Contains(prod.ProductId));
 
             List<Product> OrderProducts = await query.ToListAsync();

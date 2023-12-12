@@ -42,15 +42,16 @@ namespace ApiProgect1.controller
                 throw new Exception(ex.Message);
             }
         }
+
         [Route("checkSumOrder")]
         [HttpGet]
-        public async Task<bool> Get([FromQuery] decimal sumOrder, [FromQuery] int[] IdProducts)
+        public async Task<bool> Get([FromQuery] decimal sumOrder, [FromQuery]  int[] IdProducts)
         {
             bool ans = await _productService.getOrderProducts(sumOrder, IdProducts);
 
             if (!ans)
             {
-                Logger.LogInformation("someOne change the SumOrder");
+                Logger.LogWarning("someone change the SumOrder");
                 return false;
             }
             return true;

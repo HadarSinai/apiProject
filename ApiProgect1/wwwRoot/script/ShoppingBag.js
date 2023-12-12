@@ -77,7 +77,7 @@ const placeOrder = async () => {
     }
     for (let i = 0; i < cartProducts.length; i++) {
        
-        alert(i)
+       
         if (WasOrderItems.length == 0) {
             WasOrderItems.push(cartProducts[i])
             amount = cartProducts.filter(l => l.productId == cartProducts[i].productId).length
@@ -90,7 +90,7 @@ const placeOrder = async () => {
         else {
             was = WasOrderItems.find(s => s.productId== cartProducts[i].productId)
         amount = cartProducts.filter(l => l.productId == cartProducts[i].productId).length
-      alert(was)
+     
         if (was == undefined) {//הופעה ראשונה
 
             if (amount > 1)
@@ -110,13 +110,21 @@ const placeOrder = async () => {
         
     }
     order.OrderItems = tempOrderItem
-        try {
+
+    try {
+        let url = `api/Product/checkSumOrder?&sumOrder=${allSum}`
             for (let t = 0; t < cartProducts.length; t++) {
                 idProducts.push(cartProducts[t].productId)
-            }
-
-            const res = await fetch(`api/Product/checkSumOrder?&${allSum}&${idProducts}`)
-            if (!res) {
+                url += `&IdProducts=${cartProducts[t].productId}`
+        }
+       
+        
+        alert(url)
+        const res = await fetch(url)
+           
+            const bool = await res.json();
+               alert(bool)
+            if (bool==false) {
                 alert("סכום ההזמנה אינו תקין")
                 return;
             }
