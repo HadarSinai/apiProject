@@ -5,6 +5,8 @@ using Service;
 using Microsoft.Extensions.Configuration;
 using NLog.Web;
 using Entities;
+using ApiProgect1.MiddleWares;
+using PresidentsApp.Middlewares;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -22,6 +24,8 @@ builder.Services.AddTransient<IProductRepository, ProductRepository>();
 builder.Services.AddTransient<IProductService, ProductService>();
 builder.Services.AddTransient<IOrdersRepository, OrdersRepository>();
 builder.Services.AddTransient<IOrdersService, OrdersService>();
+builder.Services.AddTransient<IRatingService, RatingService>();
+builder.Services.AddTransient<IRatingRepository, RatingRepository>();
 
 builder.Services.AddDbContext<InsertProductContext>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("Shoes")));
 
@@ -41,6 +45,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseErrorHandlingMiddleware();
+app.UseRatingMiddleware();
 
 app.UseHttpsRedirection();
 
