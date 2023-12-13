@@ -35,7 +35,7 @@ namespace Repository
             Record_Date = rating.RecordDate;
             string query = "insert into RATING(HOST,METHOD,PATH,REFERER,USER_AGENT,Record_Date)" +
             "Values(@HOST,@METHOD,@PATH,@REFERER,@USER_AGENT,@Record_Date)";
-            using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("School")))
+            using (SqlConnection con = new SqlConnection(_configuration.GetConnectionString("Shoes")))
             using (SqlCommand cmd = new SqlCommand(query, con))
             {
                 cmd.Parameters.Add("@HOST", SqlDbType.NVarChar, 60).Value = HOST;
@@ -45,7 +45,9 @@ namespace Repository
                 cmd.Parameters.Add("@USER_AGENT", SqlDbType.NVarChar, int.MaxValue).Value = USER_AGENT;
                 cmd.Parameters.Add("@Record_Date", SqlDbType.DateTime).Value = Record_Date;
                 con.Open();
-                int rowsAffected = await cmd.ExecuteNonQueryAsync();
+                int rowsAffected =  cmd.ExecuteNonQuery();
+                //int rowsAffected = await cmd.ExecuteNonQueryAsync();
+
                 con.Close();
 
 

@@ -39,7 +39,7 @@ const showCard = (data) => {
     let clone = temp.content.cloneNode(true)
     clone.querySelector("img").src = "./potos/" + data.productImage
     clone.querySelector("h3.itemName").innerText = data.productName
-    clone.querySelector(".price").innerText = data.productPrice
+    clone.querySelector(".price").innerText = data.productPrice +"$"
     clone.querySelector(".totalColumn").addEventListener('click', () => { deleteCartProduct(data) })
     document.querySelector("tbody").appendChild(clone)
 
@@ -149,6 +149,7 @@ const saveOrder = async (order) => {
         else {
             const data = await res.json();
             alert(`order ${data.orderId} created succfully`)
+           
         }
     }
     catch (ex) {
